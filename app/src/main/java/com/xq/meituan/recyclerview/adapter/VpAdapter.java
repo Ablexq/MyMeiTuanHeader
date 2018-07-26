@@ -6,11 +6,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-public class CagegoryViewPagerAdapter extends PagerAdapter {
+public class VpAdapter extends PagerAdapter {
 
     private List<View> mViewList;
 
-    public CagegoryViewPagerAdapter(List<View> mViewList) {
+    public VpAdapter(List<View> mViewList) {
         this.mViewList = mViewList;
     }
 

@@ -12,8 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.xq.meituan.R;
-import com.xq.meituan.recyclerview.adapter.CagegoryViewPagerAdapter;
-import com.xq.meituan.recyclerview.adapter.EntranceAdapter;
+import com.xq.meituan.recyclerview.adapter.VpAdapter;
+import com.xq.meituan.recyclerview.adapter.RvAdapter;
 import com.xq.meituan.recyclerview.model.ModelHomeEntrance;
 import com.xq.meituan.recyclerview.util.ScreenUtil;
 import com.xq.meituan.recyclerview.widget.IndicatorView;
@@ -25,10 +25,10 @@ import java.util.List;
 public class Demo2Activity extends AppCompatActivity {
 
     public static final int HOME_ENTRANCE_PAGE_SIZE = 10;//首页菜单单页显示数量
-    private ViewPager entranceViewPager;
-    private LinearLayout homeEntranceLayout;
+    private ViewPager viewPager;
+    private LinearLayout container;
     private List<ModelHomeEntrance> homeEntrances;
-    private IndicatorView entranceIndicatorView;
+    private IndicatorView indicatorView;
 
 
     @Override
@@ -42,9 +42,9 @@ public class Demo2Activity extends AppCompatActivity {
     }
 
     private void initView() {
-        homeEntranceLayout = (LinearLayout) findViewById(R.id.home_entrance);
-        entranceViewPager = (ViewPager) findViewById(R.id.main_home_entrance_vp);
-        entranceIndicatorView = (IndicatorView) findViewById(R.id.main_home_entrance_indicator);
+        container = (LinearLayout) findViewById(R.id.home_entrance);
+        viewPager = (ViewPager) findViewById(R.id.main_home_entrance_vp);
+        indicatorView = (IndicatorView) findViewById(R.id.main_home_entrance_indicator);
     }
 
 
@@ -73,31 +73,35 @@ public class Demo2Activity extends AppCompatActivity {
 
         //首页菜单分页
         FrameLayout.LayoutParams entrancelayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) ((float) ScreenUtil.getScreenWidth() / 2.0f + 70));
-        homeEntranceLayout.setLayoutParams(entrancelayoutParams);
-        entranceViewPager.setLayoutParams(layoutParams12);
+        container.setLayoutParams(entrancelayoutParams);
+        viewPager.setLayoutParams(layoutParams12);
+
         LayoutInflater inflater = LayoutInflater.from(this);
         //将RecyclerView放至ViewPager中：
-        int pageSize = HOME_ENTRANCE_PAGE_SIZE;
         //一共的页数等于 总数/每页数量，并取整。
-        int pageCount = (int) Math.ceil(homeEntrances.size() * 1.0 / pageSize);
-        List<View> viewList = new ArrayList<View>();
+        int pageCount = (int) Math.ceil(homeEntrances.size() * 1.0 / HOME_ENTRANCE_PAGE_SIZE);
+        List<View> viewList = new ArrayList<>();
         for (int index = 0; index < pageCount; index++) {
             //每个页面都是inflate出一个新实例
-            RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.item_home_entrance_vp, entranceViewPager, false);
+            RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.item_home_entrance_vp, viewPager, false);
             recyclerView.setLayoutParams(layoutParams12);
             recyclerView.setLayoutManager(new GridLayoutManager(this, 5));
-            EntranceAdapter entranceAdapter = new EntranceAdapter(this, homeEntrances, index, HOME_ENTRANCE_PAGE_SIZE);
-            recyclerView.setAdapter(entranceAdapter);
+            RvAdapter rvAdapter = new RvAdapter(this, homeEntrances, index, HOME_ENTRANCE_PAGE_SIZE);
+            recyclerView.setAdapter(rvAdapter);
             viewList.add(recyclerView);
         }
-        CagegoryViewPagerAdapter adapter = new CagegoryViewPagerAdapter(viewList);
-        entranceViewPager.setAdapter(adapter);
-        entranceIndicatorView.setIndicatorCount(entranceViewPager.getAdapter().getCount());
-        entranceIndicatorView.setCurrentIndicator(entranceViewPager.getCurrentItem());
-        entranceViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
+        //设置viewpager
+        VpAdapter vpAdapter = new VpAdapter(viewList);
+        viewPager.setAdapter(vpAdapter);
+
+        //设置indicator
+        indicatorView.setIndicatorCount(viewPager.getAdapter().getCount());
+        indicatorView.setCurrentIndicator(viewPager.getCurrentItem());
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                entranceIndicatorView.setCurrentIndicator(position);
+                indicatorView.setCurrentIndicator(position);
             }
         });
     }

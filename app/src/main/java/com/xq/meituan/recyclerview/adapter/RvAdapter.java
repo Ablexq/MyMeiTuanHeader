@@ -10,12 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xq.meituan.R;
+import com.xq.meituan.flexbox.Demo3Activity;
 import com.xq.meituan.recyclerview.model.ModelHomeEntrance;
 import com.xq.meituan.recyclerview.util.ScreenUtil;
 
 import java.util.List;
 
-public class EntranceAdapter extends RecyclerView.Adapter<EntranceAdapter.EntranceViewHolder> {
+public class RvAdapter extends RecyclerView.Adapter<RvAdapter.EntranceViewHolder> {
 
     private List<ModelHomeEntrance> mDatas;
 
@@ -35,7 +36,7 @@ public class EntranceAdapter extends RecyclerView.Adapter<EntranceAdapter.Entran
 
     private List<ModelHomeEntrance> homeEntrances;
 
-    public EntranceAdapter(Context context, List<ModelHomeEntrance> datas, int index, int pageSize) {
+    public RvAdapter(Context context, List<ModelHomeEntrance> datas, int index, int pageSize) {
         this.mContext = context;
         this.homeEntrances = datas;
         mPageSize = pageSize;
@@ -44,6 +45,7 @@ public class EntranceAdapter extends RecyclerView.Adapter<EntranceAdapter.Entran
         mLayoutInflater = LayoutInflater.from(context);
 
     }
+
 
     @Override
     public EntranceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

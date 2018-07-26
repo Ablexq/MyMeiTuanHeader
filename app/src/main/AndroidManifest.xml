@@ -19,6 +19,7 @@
 
         <activity android:name=".gridview.Demo1Activity" />
         <activity android:name=".recyclerview.Demo2Activity" />
+        <activity android:name=".flexbox.Demo3Activity" />
     </application>
 
 </manifest>
