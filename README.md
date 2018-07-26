@@ -1,7 +1,7 @@
 
 仿美团头部左右切换
 
-![](https://github.com/Ablexq/MyMeiTuanHeader/tree/master/pics)
+![](https://github.com/Ablexq/MyMeiTuanHeader/blob/master/pics/header.jpg)
 
 来自:
 
