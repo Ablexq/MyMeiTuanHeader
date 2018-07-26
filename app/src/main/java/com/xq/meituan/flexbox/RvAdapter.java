@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xq.meituan.R;
 import com.xq.meituan.recyclerview.model.ModelHomeEntrance;
@@ -34,7 +36,7 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.VHolder> {
 //        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_main,null);//不可写成这种
 
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();//去掉这个可实现流布局
-        layoutParams.width= ScreenUtil.getScreenWidth() / 5;
+        layoutParams.width = ScreenUtil.getScreenWidth() / 5;
         view.setLayoutParams(layoutParams);
 
         return new VHolder(view);
@@ -44,14 +46,15 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.VHolder> {
     * 为holder设置指定数据。
     * */
     @Override
-    public void onBindViewHolder(RvAdapter.VHolder holder, int position) {
+    public void onBindViewHolder(RvAdapter.VHolder holder, final int position) {
         holder.mTextView.setText(mData.get(position).getName());
         holder.imageView.setImageResource(mData.get(position).getImage());
 
-        holder.mTextView.setOnClickListener(new View.OnClickListener() {
+        holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //item的点击事件
+                System.out.println("name=========" + mData.get(position).getName());
             }
         });
     }
@@ -65,12 +68,14 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.VHolder> {
 
         private TextView mTextView;
         private ImageView imageView;
+        private LinearLayout container;
 
         public VHolder(View itemView) {
             super(itemView);
 
             mTextView = (TextView) itemView.findViewById(R.id.entrance_name);
             imageView = (ImageView) itemView.findViewById(R.id.entrance_image);
+            container = (LinearLayout) itemView.findViewById(R.id.container);
         }
     }
 }
